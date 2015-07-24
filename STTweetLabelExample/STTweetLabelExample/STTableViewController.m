@@ -35,9 +35,14 @@
         [array addObject:[self randomLoremIpsum]];
     }
     self.dataSource = [array copy];
-    
+
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 80;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
@@ -53,8 +58,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     cell.tweetLabel.text = self.dataSource[indexPath.row];
-    const double tweetLabelLeftIndent = 58.0;
-    cell.tweetLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.tableView.frame) - tweetLabelLeftIndent;
     return cell;
 }
 
